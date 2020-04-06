@@ -12,11 +12,13 @@ metadata:
     app: webhook
 spec:
   selector:
-    k8s-app: webhook
+    app: webhook
   ports:
-  - port: 80
+  - port: 443
     protocol: TCP
     targetPort: 8080
+    nodePort: 31111
+  type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -40,3 +42,10 @@ spec:
         ports:
         - containerPort: 8080
           name: normal
+        volumeMounts:
+        - name: certs
+          mountPath: /certswebhook
+      volumes:
+      - name: certs
+        secret:
+          secretName: webhook-server-tls

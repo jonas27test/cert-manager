@@ -1,4 +1,4 @@
-module webhook
+module github.com/jonas27test/cert-manager
 
 go 1.12
 
