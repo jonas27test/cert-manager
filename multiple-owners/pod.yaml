@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: static-web
+  namespace: webhook
+  ownerReferences:
+  - apiVersion: v1
+    controller: true
+    blockOwnerDeletion: true
+    kind: Deployment
+    name: webhook
+    uid: 276d8e6f-b69c-4ee7-98d8-cdbc4be9ce18
+  - apiVersion: v1
+    controller: false
+    blockOwnerDeletion: true
+    kind: Deployment
+    name: webhook1
+    uid: 42f2e692-c073-4d5a-adad-c8d001b8ea68
+  labels:
+    role: myrole
+spec:
+  containers:
+    - name: web
+      image: nginx
+      ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP

@@ -1,0 +1,30 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook1
+  namespace: webhook
+  labels:
+    app: webhook
+spec:
+  selector:
+    matchLabels:
+      app: webhook
+  template:
+    metadata:
+      labels:
+        app: webhook
+    spec:
+      containers:
+      - name: webhook
+        image: localhost:32000/webhook
+        ports:
+        - containerPort: 8080
+          name: normal
+        volumeMounts:
+        - name: certs
+          mountPath: /certswebhook
+      volumes:
+      - name: certs
+        secret:
+          secretName: webhook-server-tls
